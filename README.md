@@ -95,6 +95,8 @@ this.$refs.wheel.reset();
 | horizontal-content | Boolean    | no       | false      |                | text item orientation
 | display-border | Boolean    | no       | false      |                |
 | display-indicator | Boolean    | no       | false      |                |
+| wheelSelectedItemIndex | number    | no       |       |     an index to end rotate with            |
+| wheelSelectedItemId | string    | no       |       |     item id to end rotate with          |
 
 ## Props API (Wheel base)
 
