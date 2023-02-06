@@ -1,13 +1,8 @@
 <template>
   <div>
-    <h1 class="text-4xl">
-      Vue3 Roulette
-    </h1>
+    <h1 class="text-4xl">Vue3 Roulette</h1>
     <div class="py-10 relative">
-      <div
-        class="wheel-anim"
-        :class="{'wheel-anim-started': startAnim}"
-      >
+      <div class="wheel-anim" :class="{ 'wheel-anim-started': startAnim }">
         <Roulette
           v-if="wheelActive"
           ref="wheel"
@@ -29,35 +24,20 @@
           :base-display-indicator="wheelSettings.baseDisplayIndicator"
           :base-display-shadow="wheelSettings.baseDisplayShadow"
           :base-background="wheelSettings.baseBackground"
+          :wheelSelectedItemIndex="1"
           @click="launchWheel"
           @wheel-start="wheelStartedCallback"
           @wheel-end="wheelEndedCallback"
         >
           <template #baseContent>
-            <div
-              v-if="wheelSettings.baseHtmlContent"
-              v-html="wheelSettings.baseHtmlContent"
-            />
+            <div v-if="wheelSettings.baseHtmlContent" v-html="wheelSettings.baseHtmlContent" />
           </template>
         </Roulette>
       </div>
 
-      <div 
-        v-show="result"
-        class="absolute bottom-2 left-1/2 transform -translate-x-1/2"
-      >
-        <button
-          class="btn btn-xs mx-2"
-          @click="onHardReset()"
-        >
-          Hard reset
-        </button>
-        <button
-          class="btn btn-xs mx-2"
-          @click="onSoftReset()"
-        >
-          Soft reset
-        </button>
+      <div v-show="result" class="absolute bottom-2 left-1/2 transform -translate-x-1/2">
+        <button class="btn btn-xs mx-2" @click="onHardReset()">Hard reset</button>
+        <button class="btn btn-xs mx-2" @click="onSoftReset()">Soft reset</button>
       </div>
     </div>
 
@@ -66,19 +46,15 @@
     </p>
 
     <div class="tabs tabs-boxed justify-center">
-      <a
-        class="tab"
-        :class="{'tab-active': managerId === 1 }"
-        @click="managerId = 1"
-      >Items manager</a> 
-      <a
-        class="tab"
-        :class="{'tab-active': managerId === 2 }"
-        @click="managerId = 2"
-      >Wheel manager</a>
+      <a class="tab" :class="{ 'tab-active': managerId === 1 }" @click="managerId = 1"
+        >Items manager</a
+      >
+      <a class="tab" :class="{ 'tab-active': managerId === 2 }" @click="managerId = 2"
+        >Wheel manager</a
+      >
     </div>
 
-    <div class="divider" /> 
+    <div class="divider" />
 
     <ItemsManager
       v-if="managerId === 1"
@@ -107,23 +83,23 @@ export default {
   components: {
     Roulette,
     ItemsManager,
-    WheelManager
+    WheelManager,
   },
 
-  data () {
+  data() {
     return {
       ...wheelData,
       wheelActive: true,
       startAnim: false,
       managerId: 1,
-      result: null
-    }
+      result: null,
+    };
   },
 
-  mounted () {
-    setTimeout(() =>{
+  mounted() {
+    setTimeout(() => {
       this.startAnim = true;
-    }, 500)
+    }, 500);
   },
 
   methods: {
@@ -148,18 +124,17 @@ export default {
         this.wheelActive = true;
       }, 10);
     },
-  }
-}
+  },
+};
 </script>
 
 <style lang="scss">
 .wheel-anim {
-  transition: transform 4s cubic-bezier(.58,-0.26,.24,1.11);
+  transition: transform 4s cubic-bezier(0.58, -0.26, 0.24, 1.11);
   transform: rotate(-1800deg) scale(1.25);
 
   &-started {
     transform: rotate(0deg) scale(1);
   }
 }
-
 </style>

@@ -179,7 +179,7 @@ export default defineComponent({
       required: false,
       default: "",
     },
-    wheelSelectedItemId: {
+    wheelSelectedItemIndex: {
       type: Number,
       required: false,
     },
@@ -244,18 +244,10 @@ export default defineComponent({
       }
       this.processingLock = true;
       let wheelResult;
-      if (this.wheelResultIndex.value !== null) {
-        wheelResult = this.wheelResultIndex.value % this.items.length;
-      } else {
-        wheelResult = Math.floor(Math.random() * this.items.length + 1) - 1;
-      }
+      wheelResult = this.wheelSelectedItemIndex;
       const wheelElt = document.querySelector(`#wheel-container-${this.randomIdRoulette} .wheel`);
 
-      if (wheelSelectedItemId) {
-        this.itemSelected = this.items.filter((x) => x.id == wheelSelectedItemId);
-      } else {
-        this.itemSelected = this.items[wheelResult];
-      }
+      this.itemSelected = this.items[this.wheelSelectedItemIndex];
 
       wheelElt.style.transform = `rotate(${
         this.counterClockWiseOperator * (360 * 3) +
