@@ -246,18 +246,21 @@ export default defineComponent({
       if (this.processingLock && this.itemSelected != null) {
         return;
       }
+
       this.processingLock = true;
+
       let wheelResult;
+
       if (this.wheelSelectedItemIndex) {
         wheelResult = this.wheelSelectedItemIndex;
-      } else if (this.wheelSelectedItemId) {
-        const index = 0;
+      }
+
+      if (this.wheelSelectedItemId) {
         for (let i = 0; i < this.items.length; i++) {
           if (this.items[i].id == this.wheelSelectedItemId) {
-            index == i;
+            wheelResult = i;
           }
         }
-        wheelResult = index;
       }
 
       const wheelElt = document.querySelector(`#wheel-container-${this.randomIdRoulette} .wheel`);
