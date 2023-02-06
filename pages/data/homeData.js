@@ -26,5 +26,5 @@ export default {
     baseDisplayIndicator: true,
     baseBackground: "#EEAA33",
     baseHtmlContent: "<strong>Touch<br>Me!</strong>",
-  }
-}
+  },
+};

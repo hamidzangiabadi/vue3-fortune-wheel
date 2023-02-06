@@ -184,7 +184,7 @@ export default defineComponent({
       required: false,
     },
     wheelSelectedItemId: {
-      type: Number,
+      type: String,
       required: false,
     },
   },

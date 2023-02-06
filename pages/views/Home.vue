@@ -24,6 +24,7 @@
           :base-display-indicator="wheelSettings.baseDisplayIndicator"
           :base-display-shadow="wheelSettings.baseDisplayShadow"
           :base-background="wheelSettings.baseBackground"
+          wheelSelectedItemId="test"
           @click="launchWheel"
           @wheel-start="wheelStartedCallback"
           @wheel-end="wheelEndedCallback"
