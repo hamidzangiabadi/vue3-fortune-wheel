@@ -23,10 +23,7 @@
       <div class="wheel-base">
         <slot name="baseContent" />
       </div>
-      <div
-        v-if="baseDisplayIndicator"
-        class="wheel-base-indicator"
-      />
+      <div v-if="baseDisplayIndicator" class="wheel-base-indicator" />
     </div>
     <!-- WHEEL -->
     <div
@@ -44,9 +41,7 @@
         :key="item.id"
         class="wheel-item"
         :style="{
-          transform: `rotate(${itemAngle * index}deg) skewY(${-(
-            90 - itemAngle
-          )}deg)`,
+          transform: `rotate(${itemAngle * index}deg) skewY(${-(90 - itemAngle)}deg)`,
           background: item.background,
         }"
       >
@@ -54,15 +49,10 @@
           class="content"
           :class="{ 'horizontal-content': horizontalContent }"
           :style="{
-            transform: `skewY(${90 - itemAngle}deg) rotate(${
-              itemAngle / 2
-            }deg)`,
+            transform: `skewY(${90 - itemAngle}deg) rotate(${itemAngle / 2}deg)`,
           }"
         >
-          <span
-            :style="{ color: item.textColor }"
-            v-html="item.htmlContent"
-          />
+          <span :style="{ color: item.textColor }" v-html="item.htmlContent" />
         </div>
       </div>
     </div>
@@ -70,8 +60,9 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue'
-export default defineComponent ({
+import { defineComponent } from "vue";
+import { numbersData } from "../../pages/data/examplesData";
+export default defineComponent({
   name: "Roulette",
   emits: ["wheelStart", "wheelEnd"],
   props: {
@@ -183,11 +174,14 @@ export default defineComponent ({
       required: false,
       default: false,
     },
-
     baseBackground: {
       type: String,
       required: false,
       default: "",
+    },
+    wheelSelectedItemId: {
+      type: Number,
+      required: false,
     },
   },
   data() {
@@ -203,9 +197,7 @@ export default defineComponent ({
     },
     startingAngle: function () {
       if (this.centeredIndicator) {
-        return (
-          -1 * this.firstItemIndex.value * this.itemAngle - this.itemAngle / 2
-        );
+        return -1 * this.firstItemIndex.value * this.itemAngle - this.itemAngle / 2;
       } else {
         return -1 * this.firstItemIndex.value * this.itemAngle;
       }
@@ -214,16 +206,13 @@ export default defineComponent ({
       if (!this.resultVariation) {
         return 0;
       }
-      const minDegreesVariation =
-        (((this.itemAngle / 2) * this.resultVariation) / 100) * -1;
-      const maxDegreesVariation =
-        ((this.itemAngle / 2) * this.resultVariation) / 100;
+      const minDegreesVariation = (((this.itemAngle / 2) * this.resultVariation) / 100) * -1;
+      const maxDegreesVariation = ((this.itemAngle / 2) * this.resultVariation) / 100;
       // Return random value between min and max degrees variation
       return Number(
-        (
-          Math.random() * (maxDegreesVariation - minDegreesVariation) +
-          minDegreesVariation
-        ).toFixed(2)
+        (Math.random() * (maxDegreesVariation - minDegreesVariation) + minDegreesVariation).toFixed(
+          2
+        )
       );
     },
     counterClockWiseOperator: function () {
@@ -231,14 +220,16 @@ export default defineComponent ({
     },
   },
   mounted() {
-    this.randomIdRoulette = Number((Math.random() * (999999 - 1) +1).toFixed(0));
+    this.randomIdRoulette = Number((Math.random() * (999999 - 1) + 1).toFixed(0));
     this.$nextTick(() => {
       this.reset();
-      document.querySelector(`#wheel-container-${this.randomIdRoulette} .wheel`).addEventListener("transitionend", () => {
-        this.processingLock = false;
-        this.$emit("wheel-end", this.itemSelected);
-      });
-    })
+      document
+        .querySelector(`#wheel-container-${this.randomIdRoulette} .wheel`)
+        .addEventListener("transitionend", () => {
+          this.processingLock = false;
+          this.$emit("wheel-end", this.itemSelected);
+        });
+    });
   },
   methods: {
     reset() {
@@ -252,19 +243,19 @@ export default defineComponent ({
         return;
       }
       this.processingLock = true;
-      let wheelResult;
-      if (this.wheelResultIndex.value !== null) {
-        wheelResult = this.wheelResultIndex.value % this.items.length;
-      } else {
-        wheelResult = Math.floor(Math.random() * this.items.length + 1) - 1;
-      }
+      // let wheelResult;
+      // if (this.wheelResultIndex.value !== null) {
+      //   wheelResult = this.wheelResultIndex.value % this.items.length;
+      // } else {
+      //   wheelResult = Math.floor(Math.random() * this.items.length + 1) - 1;
+      // }
       const wheelElt = document.querySelector(`#wheel-container-${this.randomIdRoulette} .wheel`);
 
-      this.itemSelected = this.items[wheelResult];
+      this.itemSelected = this.items.filter((x) => x.id == wheelSelectedItemId);
 
       wheelElt.style.transform = `rotate(${
         this.counterClockWiseOperator * (360 * 3) +
-        -(wheelResult) * this.itemAngle -
+        -wheelResult * this.itemAngle -
         this.itemAngle / 2 +
         this.degreesVariation
       }deg)`;
@@ -396,11 +387,7 @@ export default defineComponent ({
     top: 0;
     z-index: 3;
     border-radius: 50%;
-    background-image: linear-gradient(
-      to left,
-      black 33%,
-      rgba(255, 255, 255, 0) 0%
-    );
+    background-image: linear-gradient(to left, black 33%, rgba(255, 255, 255, 0) 0%);
     background-position: bottom;
     background-size: 3px 1px;
     /* background:linear-gradient(red,purple,orange); */
