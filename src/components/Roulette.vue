@@ -183,6 +183,10 @@ export default defineComponent({
       type: Number,
       required: false,
     },
+    wheelSelectedItemId: {
+      type: Number,
+      required: false,
+    },
   },
   data() {
     return {
@@ -244,7 +248,18 @@ export default defineComponent({
       }
       this.processingLock = true;
       let wheelResult;
-      wheelResult = this.wheelSelectedItemIndex;
+      if (this.wheelSelectedItemIndex) {
+        wheelResult = this.wheelSelectedItemIndex;
+      } else if (this.wheelSelectedItemId) {
+        const index = 0;
+        for (let i = 0; i < this.items.length; i++) {
+          if (this.items[i].id == this.wheelSelectedItemId) {
+            index == i;
+          }
+        }
+        wheelResult = index;
+      }
+
       const wheelElt = document.querySelector(`#wheel-container-${this.randomIdRoulette} .wheel`);
 
       this.itemSelected = this.items[this.wheelSelectedItemIndex];

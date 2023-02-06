@@ -120,6 +120,14 @@ var script = defineComponent({
       type: String,
       required: false,
       "default": ""
+    },
+    wheelSelectedItemIndex: {
+      type: Number,
+      required: false
+    },
+    wheelSelectedItemId: {
+      type: Number,
+      required: false
     }
   },
   data: function data() {
@@ -181,14 +189,20 @@ var script = defineComponent({
       this.processingLock = true;
       var wheelResult;
 
-      if (this.wheelResultIndex.value !== null) {
-        wheelResult = this.wheelResultIndex.value % this.items.length;
-      } else {
-        wheelResult = Math.floor(Math.random() * this.items.length + 1) - 1;
+      if (this.wheelSelectedItemIndex) {
+        wheelResult = this.wheelSelectedItemIndex;
+      } else if (this.wheelSelectedItemId) {
+        var index = 0;
+
+        for (var i = 0; i < this.items.length; i++) {
+          if (this.items[i].id == this.wheelSelectedItemId) ;
+        }
+
+        wheelResult = index;
       }
 
       var wheelElt = document.querySelector("#wheel-container-".concat(this.randomIdRoulette, " .wheel"));
-      this.itemSelected = this.items[wheelResult];
+      this.itemSelected = this.items[this.wheelSelectedItemIndex];
       wheelElt.style.transform = "rotate(".concat(this.counterClockWiseOperator * (360 * 3) + -wheelResult * this.itemAngle - this.itemAngle / 2 + this.degreesVariation, "deg)");
       this.$emit("wheel-start");
     }
@@ -285,10 +299,10 @@ function styleInject(css, ref) {
   }
 }
 
-var css_248z = ".wheel-container[data-v-7c807569],\n.wheel-base[data-v-7c807569],\n.wheel-base-container[data-v-7c807569],\n.wheel-base-indicator[data-v-7c807569] {\n  transition: transform 1s ease-in-out;\n}\n.wheel-container[data-v-7c807569] {\n  position: relative;\n  display: inline-block;\n  overflow: hidden;\n  border-radius: 50%;\n  cursor: pointer;\n}\n.wheel-container-indicator[data-v-7c807569]:before {\n  content: \"\";\n  position: absolute;\n  z-index: 4;\n  width: 0;\n  height: 0;\n  border-left: 20px solid transparent;\n  border-right: 20px solid transparent;\n  border-top: 20px solid black;\n  transform: translateX(-50%);\n}\n.wheel-container.indicator-top[data-v-7c807569] {\n  transform: rotate(0deg);\n}\n.wheel-container.indicator-right[data-v-7c807569] {\n  transform: rotate(90deg);\n}\n.wheel-container.indicator-right .wheel-base[data-v-7c807569] {\n  transform: rotate(-90deg);\n}\n.wheel-container.indicator-bottom[data-v-7c807569] {\n  transform: rotate(180deg);\n}\n.wheel-container.indicator-bottom .wheel-base[data-v-7c807569] {\n  transform: rotate(-180deg);\n}\n.wheel-container.indicator-left[data-v-7c807569] {\n  transform: rotate(270deg);\n}\n.wheel-container.indicator-left .wheel-base[data-v-7c807569] {\n  transform: rotate(-270deg);\n}\n.wheel-container-border[data-v-7c807569] {\n  border: 8px solid black;\n}\n.wheel-container-shadow[data-v-7c807569] {\n  box-shadow: 5px 5px 15px -5px #000000;\n}\n.wheel-base-container[data-v-7c807569] {\n  position: absolute;\n  z-index: 2;\n  top: 50%;\n  left: 50%;\n  border-radius: 50%;\n  border: 5px solid black;\n  transform: translate(-50%, -50%);\n}\n.wheel-base-container-shadow[data-v-7c807569] {\n  box-shadow: 5px 5px 15px -5px #000000;\n}\n.wheel-base-container .wheel-base[data-v-7c807569] {\n  position: absolute;\n  z-index: 2;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  overflow: hidden;\n  width: 100%;\n  height: 100%;\n  border-radius: 50%;\n}\n.wheel-base-container .wheel-base-indicator[data-v-7c807569] {\n  position: absolute;\n  z-index: 1;\n  width: 100%;\n  height: 100%;\n}\n.wheel-base-container .wheel-base-indicator[data-v-7c807569]:before {\n  content: \"\";\n  position: absolute;\n  z-index: 1;\n  top: -20px;\n  width: 0;\n  height: 0;\n  border-left: 20px solid transparent;\n  border-right: 20px solid transparent;\n  border-bottom: 20px solid black;\n  transform: translateX(-50%);\n}\n.wheel[data-v-7c807569] {\n  background: white;\n  border-radius: 50%;\n  margin: auto;\n  overflow: hidden;\n}\n.wheel.easing-ease[data-v-7c807569] {\n  transition: transform cubic-bezier(0.65, 0, 0.35, 1);\n}\n.wheel.easing-bounce[data-v-7c807569] {\n  transition: transform cubic-bezier(0.49, 0.02, 0.52, 1.12);\n}\n.wheel-border[data-v-7c807569]:after {\n  content: \"\";\n  width: 100%;\n  height: 100%;\n  position: absolute;\n  left: 0;\n  top: 0;\n  z-index: 3;\n  border-radius: 50%;\n  background-image: linear-gradient(to left, black 33%, rgba(255, 255, 255, 0) 0%);\n  background-position: bottom;\n  background-size: 3px 1px;\n  /* background:linear-gradient(red,purple,orange); */\n  -webkit-mask: radial-gradient(transparent 65%, #000 66%);\n  mask: radial-gradient(transparent 65%, #000 66%);\n}\n.wheel-item[data-v-7c807569] {\n  overflow: hidden;\n  position: absolute;\n  top: 0;\n  right: 0;\n  width: 50%;\n  height: 50%;\n  transform-origin: 0% 100%;\n  border: 1px solid black;\n}\n.wheel-item[data-v-7c807569]:nth-child(odd) {\n  background-color: skyblue;\n}\n.wheel-item[data-v-7c807569]:nth-child(even) {\n  background-color: pink;\n}\n.wheel .content[data-v-7c807569] {\n  position: absolute;\n  left: -100%;\n  width: 200%;\n  height: 200%;\n  text-align: center;\n  transform: skewY(30deg) rotate(0deg);\n  padding-top: 20px;\n}\n.wheel .content.horizontal-content[data-v-7c807569] {\n  left: initial;\n  right: 100%;\n  width: 50%;\n  height: 250%;\n  text-align: right;\n}\n.wheel .content.horizontal-content span[data-v-7c807569] {\n  display: block;\n  transform: rotate(270deg);\n}";
+var css_248z = ".wheel-container[data-v-6f5d6002],\n.wheel-base[data-v-6f5d6002],\n.wheel-base-container[data-v-6f5d6002],\n.wheel-base-indicator[data-v-6f5d6002] {\n  transition: transform 1s ease-in-out;\n}\n.wheel-container[data-v-6f5d6002] {\n  position: relative;\n  display: inline-block;\n  overflow: hidden;\n  border-radius: 50%;\n  cursor: pointer;\n}\n.wheel-container-indicator[data-v-6f5d6002]:before {\n  content: \"\";\n  position: absolute;\n  z-index: 4;\n  width: 0;\n  height: 0;\n  border-left: 20px solid transparent;\n  border-right: 20px solid transparent;\n  border-top: 20px solid black;\n  transform: translateX(-50%);\n}\n.wheel-container.indicator-top[data-v-6f5d6002] {\n  transform: rotate(0deg);\n}\n.wheel-container.indicator-right[data-v-6f5d6002] {\n  transform: rotate(90deg);\n}\n.wheel-container.indicator-right .wheel-base[data-v-6f5d6002] {\n  transform: rotate(-90deg);\n}\n.wheel-container.indicator-bottom[data-v-6f5d6002] {\n  transform: rotate(180deg);\n}\n.wheel-container.indicator-bottom .wheel-base[data-v-6f5d6002] {\n  transform: rotate(-180deg);\n}\n.wheel-container.indicator-left[data-v-6f5d6002] {\n  transform: rotate(270deg);\n}\n.wheel-container.indicator-left .wheel-base[data-v-6f5d6002] {\n  transform: rotate(-270deg);\n}\n.wheel-container-border[data-v-6f5d6002] {\n  border: 8px solid black;\n}\n.wheel-container-shadow[data-v-6f5d6002] {\n  box-shadow: 5px 5px 15px -5px #000000;\n}\n.wheel-base-container[data-v-6f5d6002] {\n  position: absolute;\n  z-index: 2;\n  top: 50%;\n  left: 50%;\n  border-radius: 50%;\n  border: 5px solid black;\n  transform: translate(-50%, -50%);\n}\n.wheel-base-container-shadow[data-v-6f5d6002] {\n  box-shadow: 5px 5px 15px -5px #000000;\n}\n.wheel-base-container .wheel-base[data-v-6f5d6002] {\n  position: absolute;\n  z-index: 2;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  overflow: hidden;\n  width: 100%;\n  height: 100%;\n  border-radius: 50%;\n}\n.wheel-base-container .wheel-base-indicator[data-v-6f5d6002] {\n  position: absolute;\n  z-index: 1;\n  width: 100%;\n  height: 100%;\n}\n.wheel-base-container .wheel-base-indicator[data-v-6f5d6002]:before {\n  content: \"\";\n  position: absolute;\n  z-index: 1;\n  top: -20px;\n  width: 0;\n  height: 0;\n  border-left: 20px solid transparent;\n  border-right: 20px solid transparent;\n  border-bottom: 20px solid black;\n  transform: translateX(-50%);\n}\n.wheel[data-v-6f5d6002] {\n  background: white;\n  border-radius: 50%;\n  margin: auto;\n  overflow: hidden;\n}\n.wheel.easing-ease[data-v-6f5d6002] {\n  transition: transform cubic-bezier(0.65, 0, 0.35, 1);\n}\n.wheel.easing-bounce[data-v-6f5d6002] {\n  transition: transform cubic-bezier(0.49, 0.02, 0.52, 1.12);\n}\n.wheel-border[data-v-6f5d6002]:after {\n  content: \"\";\n  width: 100%;\n  height: 100%;\n  position: absolute;\n  left: 0;\n  top: 0;\n  z-index: 3;\n  border-radius: 50%;\n  background-image: linear-gradient(to left, black 33%, rgba(255, 255, 255, 0) 0%);\n  background-position: bottom;\n  background-size: 3px 1px;\n  /* background:linear-gradient(red,purple,orange); */\n  -webkit-mask: radial-gradient(transparent 65%, #000 66%);\n  mask: radial-gradient(transparent 65%, #000 66%);\n}\n.wheel-item[data-v-6f5d6002] {\n  overflow: hidden;\n  position: absolute;\n  top: 0;\n  right: 0;\n  width: 50%;\n  height: 50%;\n  transform-origin: 0% 100%;\n  border: 1px solid black;\n}\n.wheel-item[data-v-6f5d6002]:nth-child(odd) {\n  background-color: skyblue;\n}\n.wheel-item[data-v-6f5d6002]:nth-child(even) {\n  background-color: pink;\n}\n.wheel .content[data-v-6f5d6002] {\n  position: absolute;\n  left: -100%;\n  width: 200%;\n  height: 200%;\n  text-align: center;\n  transform: skewY(30deg) rotate(0deg);\n  padding-top: 20px;\n}\n.wheel .content.horizontal-content[data-v-6f5d6002] {\n  left: initial;\n  right: 100%;\n  width: 50%;\n  height: 250%;\n  text-align: right;\n}\n.wheel .content.horizontal-content span[data-v-6f5d6002] {\n  display: block;\n  transform: rotate(270deg);\n}";
 styleInject(css_248z);
 
 script.render = render;
-script.__scopeId = "data-v-7c807569";
+script.__scopeId = "data-v-6f5d6002";
 
 export { script as Roulette };
