@@ -243,15 +243,19 @@ export default defineComponent({
         return;
       }
       this.processingLock = true;
-      // let wheelResult;
-      // if (this.wheelResultIndex.value !== null) {
-      //   wheelResult = this.wheelResultIndex.value % this.items.length;
-      // } else {
-      //   wheelResult = Math.floor(Math.random() * this.items.length + 1) - 1;
-      // }
+      let wheelResult;
+      if (this.wheelResultIndex.value !== null) {
+        wheelResult = this.wheelResultIndex.value % this.items.length;
+      } else {
+        wheelResult = Math.floor(Math.random() * this.items.length + 1) - 1;
+      }
       const wheelElt = document.querySelector(`#wheel-container-${this.randomIdRoulette} .wheel`);
 
-      this.itemSelected = this.items.filter((x) => x.id == wheelSelectedItemId);
+      if (wheelSelectedItemId) {
+        this.itemSelected = this.items.filter((x) => x.id == wheelSelectedItemId);
+      } else {
+        this.itemSelected = this.items[wheelResult];
+      }
 
       wheelElt.style.transform = `rotate(${
         this.counterClockWiseOperator * (360 * 3) +
