@@ -237,6 +237,11 @@ export default defineComponent({
   },
   methods: {
     reset() {
+      if (this.itemSelected) {
+        document.querySelector(
+          `#wheel-container-${this.randomIdRoulette} .wheel`
+        ).style.transitionDuration = "0s";
+      }
       this.itemSelected = null;
       document.querySelector(
         `#wheel-container-${this.randomIdRoulette} .wheel`
