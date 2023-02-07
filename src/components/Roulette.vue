@@ -264,6 +264,7 @@ export default defineComponent({
         for (let i = 0; i < this.items.length; i++) {
           if (this.items[i].id == this.wheelSelectedItemId) {
             wheelResult = i;
+            this.wheelSelectedItemIndex = i;
           }
         }
       }
