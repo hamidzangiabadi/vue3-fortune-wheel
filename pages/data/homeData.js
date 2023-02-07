@@ -1,6 +1,6 @@
 export default {
   items: [
-    { id: 1, name: "Banana", htmlContent: "Banana", textColor: "", background: "" },
+    { id: "test", name: "Banana", htmlContent: "Banana", textColor: "", background: "" },
     { id: 2, name: "Apple", htmlContent: "Apple", textColor: "", background: "" },
     { id: 3, name: "Orange", htmlContent: "Orange", textColor: "", background: "" },
     { id: 4, name: "Cherry", htmlContent: "Cherry", textColor: "", background: "" },

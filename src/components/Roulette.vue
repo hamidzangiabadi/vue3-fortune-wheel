@@ -258,20 +258,19 @@ export default defineComponent({
 
       if (this.wheelSelectedItemIndex) {
         wheelResult = this.wheelSelectedItemIndex;
+        this.itemSelected = this.items[this.wheelSelectedItemIndex];
       }
 
       if (this.wheelSelectedItemId) {
         for (let i = 0; i < this.items.length; i++) {
           if (this.items[i].id == this.wheelSelectedItemId) {
             wheelResult = i;
-            this.wheelSelectedItemIndex = i;
+            this.itemSelected = this.items[i];
           }
         }
       }
 
       const wheelElt = document.querySelector(`#wheel-container-${this.randomIdRoulette} .wheel`);
-
-      this.itemSelected = this.items[this.wheelSelectedItemIndex];
 
       wheelElt.style.transform = `rotate(${
         this.counterClockWiseOperator * (360 * 3) +
