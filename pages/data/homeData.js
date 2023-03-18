@@ -13,7 +13,7 @@ export default {
     indicatorPosition: "top",
     size: 300,
     displayShadow: true,
-    duration: 5,
+    duration: 10,
     resultVariation: 70,
     easing: "bounce",
     counterClockwise: true,

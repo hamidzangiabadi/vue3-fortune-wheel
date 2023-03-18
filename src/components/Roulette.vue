@@ -275,7 +275,7 @@ export default defineComponent({
       wheelElt.style.transitionDuration = `${this.duration}s`;
 
       wheelElt.style.transform = `rotate(${
-        this.counterClockWiseOperator * (360 * 3) +
+        this.counterClockWiseOperator * (360 * 11) +
         -wheelResult * this.itemAngle -
         this.itemAngle / 2 +
         this.degreesVariation
