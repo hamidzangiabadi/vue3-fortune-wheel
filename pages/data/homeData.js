@@ -15,7 +15,7 @@ export default {
     displayShadow: true,
     duration: 10,
     resultVariation: 70,
-    easing: "bounce",
+    easing: "ease",
     counterClockwise: true,
     horizontalContent: false,
     displayBorder: true,

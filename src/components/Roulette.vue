@@ -393,7 +393,7 @@ export default defineComponent({
   overflow: hidden;
 
   &.easing-ease {
-    transition: transform cubic-bezier(0.65, 0, 0.35, 1);
+    transition: transform cubic-bezier(0.2, 0.02, 0.3, 0);
   }
   &.easing-bounce {
     transition: transform cubic-bezier(0.49, 0.02, 0.52, 1.12);
